@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raghav Garg — Full Stack Web Developer</title>
+<meta name="description" content="Raghav Garg — MERN stack web developer. Building, deploying and hosting websites end to end.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:        #14171C;
+    --ink-soft:   #4A4E54;
+    --paper:      #EAE7DE;
+    --paper-dim:  #DFDBCF;
+    --panel:      #14171C;
+    --panel-text: #EAE7DE;
+    --red:        #C0402B;
+    --pine:       #2F5D45;
+    --gold:       #A9873F;
+    --line:       rgba(20,23,28,0.14);
+    --line-soft:  rgba(234,231,222,0.16);
+    --radius:     3px;
+    --maxw:       1120px;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.serif{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    line-height:1.08;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  ::selection{ background:var(--red); color:var(--paper); }
+
+  /* ---------- focus ---------- */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--red);
+    outline-offset:3px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:rgba(234,231,222,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 32px;
+    max-width:var(--maxw); margin:0 auto;
+  }
+  .nav .mark{
+    font-family:'Fraunces', serif;
+    font-weight:700; font-size:1.25rem;
+    display:flex; align-items:center; gap:8px;
+  }
+  .nav .mark .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--red); display:inline-block;
+  }
+  .nav ul{
+    list-style:none; display:flex; gap:36px; margin:0; padding:0;
+  }
+  .nav ul a{
+    font-size:0.95rem; color:var(--ink-soft);
+    position:relative; padding-bottom:3px;
+    transition:color .2s ease;
+  }
+  .nav ul a:hover{ color:var(--ink); }
+  .nav ul a::after{
+    content:''; position:absolute; left:0; right:0; bottom:-2px;
+    height:1px; background:var(--red);
+    transform:scaleX(0); transform-origin:left;
+    transition:transform .25s ease;
+  }
+  .nav ul a:hover::after{ transform:scaleX(1); }
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; padding:4px; }
+  .nav-toggle span{ display:block; width:22px; height:2px; background:var(--ink); margin:5px 0; }
+
+  @media (max-width:760px){
+    .nav ul{
+      position:absolute; top:100%; left:0; right:0;
+      background:var(--paper); border-bottom:1px solid var(--line);
+      flex-direction:column; gap:0; max-height:0; overflow:hidden;
+      transition:max-height .3s ease;
+    }
+    .nav ul.open{ max-height:280px; }
+    .nav ul li{ border-top:1px solid var(--line); }
+    .nav ul a{ display:block; padding:16px 32px; }
+    .nav-toggle{ display:block; }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:88px 0 96px;
+    opacity:0; transform:translateY(14px);
+    animation:rise .7s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+  .hero-grid{
+    display:grid; grid-template-columns:1.15fr 0.85fr; gap:64px; align-items:center;
+  }
+  .eyebrow-line{
+    display:flex; align-items:center; gap:10px;
+    font-family:'JetBrains Mono', monospace; font-size:0.8rem; color:var(--ink-soft);
+    margin-bottom:22px;
+  }
+  .eyebrow-line .dot{ width:6px; height:6px; border-radius:50%; background:var(--pine); }
+  .hero h1{
+    font-size:clamp(2.2rem, 4.6vw, 3.6rem);
+    max-width:15ch;
+  }
+  .hero h1 em{ font-style:italic; color:var(--red); }
+  .hero p.lede{
+    margin-top:22px; max-width:46ch;
+    font-size:1.08rem; color:var(--ink-soft);
+  }
+  .hero-actions{
+    margin-top:34px; display:flex; gap:16px; flex-wrap:wrap; align-items:center;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:13px 22px; border-radius:var(--radius);
+    font-size:0.95rem; font-weight:600;
+    border:1px solid var(--ink);
+    transition:background .2s ease, color .2s ease, transform .2s ease;
+  }
+  .btn.primary{ background:var(--ink); color:var(--paper); }
+  .btn.primary:hover{ background:var(--red); border-color:var(--red); transform:translateY(-1px); }
+  .btn.ghost:hover{ background:var(--ink); color:var(--paper); }
+
+  /* terminal card */
+  .terminal{
+    margin-top:40px;
+    background:var(--panel); color:var(--panel-text);
+    border-radius:6px; overflow:hidden;
+    box-shadow:0 18px 40px -20px rgba(20,23,28,0.45);
+    max-width:520px;
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:6px;
+    padding:11px 16px; border-bottom:1px solid var(--line-soft);
+  }
+  .terminal-bar span{
+    width:8px; height:8px; border-radius:50%;
+    background:rgba(234,231,222,0.35);
+  }
+  .terminal-bar small{
+    margin-left:8px; font-family:'JetBrains Mono', monospace;
+    font-size:0.72rem; color:rgba(234,231,222,0.55);
+  }
+  .terminal-body{
+    padding:18px 20px 22px;
+    font-family:'JetBrains Mono', monospace; font-size:0.86rem; line-height:1.85;
+  }
+  .terminal-body .cmd{ color:var(--gold); }
+  .terminal-body .out{ color:rgba(234,231,222,0.75); }
+  .terminal-body .out b{ color:var(--panel-text); font-weight:600; }
+
+  /* portrait */
+  .portrait-frame{
+    position:relative; justify-self:center;
+    width:min(320px, 80%);
+  }
+  .portrait-ring{
+    position:absolute; inset:-14px;
+    border:1px solid var(--line);
+    border-radius:50%;
+  }
+  .portrait-frame .photo{
+    width:100%; aspect-ratio:1/1; border-radius:50%;
+    overflow:hidden; background:var(--ink);
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+  }
+  .portrait-frame .photo img{
+    width:100%; height:100%; object-fit:cover;
+  }
+  .portrait-frame .initials{
+    font-family:'Fraunces', serif; font-size:4.2rem; font-weight:600;
+    color:var(--paper);
+  }
+  .portrait-caption{
+    text-align:center; margin-top:16px;
+    font-family:'JetBrains Mono', monospace; font-size:0.76rem;
+    color:var(--ink-soft);
+  }
+
+  @media (max-width:900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .portrait-frame{ order:-1; width:180px; margin-bottom:8px; }
+    .portrait-ring{ inset:-10px; }
+    .portrait-frame .initials{ font-size:2.4rem; }
+  }
+
+  /* ---------- SECTION shell ---------- */
+  section{ padding:88px 0; border-top:1px solid var(--line); }
+  .section-head{
+    display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:baseline;
+    margin-bottom:48px;
+  }
+  .section-num{
+    font-family:'JetBrains Mono', monospace; font-size:0.8rem; color:var(--ink-soft);
+  }
+  .section-head h2{ font-size:clamp(1.8rem, 3vw, 2.4rem); }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{
+    display:grid; grid-template-columns:0.95fr 1.05fr; gap:64px;
+  }
+  .about-grid p{ font-size:1.05rem; color:var(--ink-soft); max-width:52ch; }
+  .about-grid p + p{ margin-top:16px; }
+
+  .handle-list{ border-top:1px solid var(--line); }
+  .handle-row{
+    display:grid; grid-template-columns:140px 1fr; gap:20px;
+    padding:20px 0; border-bottom:1px solid var(--line);
+  }
+  .handle-row h3{
+    font-family:'Manrope', sans-serif; font-weight:700; font-size:0.95rem;
+    color:var(--red);
+  }
+  .handle-row p{ margin:0; color:var(--ink-soft); font-size:0.96rem; }
+
+  .platform-pills{
+    display:flex; flex-wrap:wrap; gap:10px; margin-top:26px;
+  }
+  .pill{
+    font-family:'JetBrains Mono', monospace; font-size:0.78rem;
+    padding:7px 13px; border-radius:20px;
+    border:1px solid var(--pine); color:var(--pine);
+  }
+
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; } }
+
+  /* ---------- SKILLS / STACK ---------- */
+  .stack{
+    display:flex; flex-direction:column; gap:2px;
+    border:1px solid var(--ink); border-radius:6px; overflow:hidden;
+  }
+  .stack-layer{
+    display:grid; grid-template-columns:220px 1fr; gap:24px;
+    padding:24px 28px; background:var(--paper);
+    border-top:1px solid var(--line);
+  }
+  .stack-layer:first-child{ border-top:none; }
+  .stack-layer:nth-child(even){ background:var(--paper-dim); }
+  .layer-label{
+    display:flex; flex-direction:column; gap:4px;
+  }
+  .layer-label .tag{
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem; color:var(--ink-soft);
+  }
+  .layer-label h3{ font-family:'Fraunces', serif; font-weight:600; font-size:1.15rem; }
+  .layer-techs{
+    display:flex; flex-wrap:wrap; gap:8px 10px; align-items:center;
+  }
+  .tech{
+    font-size:0.9rem; color:var(--ink);
+    padding:6px 0; border-bottom:1px dotted var(--line);
+  }
+  @media (max-width:700px){
+    .stack-layer{ grid-template-columns:1fr; gap:10px; }
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .proj-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:22px;
+  }
+  @media (max-width:820px){ .proj-grid{ grid-template-columns:1fr; } }
+
+  .proj-card{
+    display:block; border:1px solid var(--line); border-radius:6px;
+    overflow:hidden; background:var(--paper-dim);
+    transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+  }
+  .proj-card:hover{
+    border-color:var(--ink); transform:translateY(-3px);
+    box-shadow:0 16px 30px -22px rgba(20,23,28,0.5);
+  }
+  .proj-bar{
+    display:flex; align-items:center; gap:10px;
+    padding:12px 16px; border-bottom:1px solid var(--line);
+    background:var(--paper);
+  }
+  .proj-bar .led{ width:7px; height:7px; border-radius:50%; background:var(--pine); }
+  .proj-bar .url{
+    font-family:'JetBrains Mono', monospace; font-size:0.76rem; color:var(--ink-soft);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+  }
+  .proj-body{ padding:22px 20px 24px; }
+  .proj-body h3{ font-size:1.2rem; margin-bottom:8px; }
+  .proj-body p{ margin:0; font-size:0.94rem; color:var(--ink-soft); }
+  .proj-tag{
+    display:inline-block; margin-top:14px;
+    font-family:'JetBrains Mono', monospace; font-size:0.72rem;
+    color:var(--red);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    display:grid; grid-template-columns:1.2fr 0.8fr; gap:48px; align-items:end;
+  }
+  .contact h2{ font-size:clamp(1.9rem, 4vw, 3rem); max-width:14ch; }
+  .contact-links{ display:flex; flex-direction:column; gap:14px; }
+  .contact-links a{
+    display:flex; align-items:baseline; gap:12px;
+    padding:16px 0; border-bottom:1px solid var(--line);
+    font-size:1.02rem;
+  }
+  .contact-links a span.k{
+    font-family:'JetBrains Mono', monospace; font-size:0.74rem; color:var(--ink-soft);
+    width:78px; flex-shrink:0;
+  }
+  .contact-links a:hover span.v{ color:var(--red); }
+
+  @media (max-width:820px){ .contact{ grid-template-columns:1fr; } }
+
+  footer{
+    padding:28px 0 40px;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'JetBrains Mono', monospace; font-size:0.76rem; color:var(--ink-soft);
+    flex-wrap:wrap; gap:10px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .hero{ animation:none; opacity:1; transform:none; }
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <nav class="nav">
+    <a href="#top" class="mark"><span class="dot"></span>Raghav Garg</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul id="navList">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none;">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow-line"><span class="dot"></span>Patiala, Punjab — open to freelance &amp; full-time work</div>
+        <h1>I build websites, <em>then I keep them online.</em></h1>
+        <p class="lede">MERN stack developer. I design and build full websites end to end, then handle the domain and hosting side too — so it's one job, not three handed off to different people.</p>
+
+        <div class="hero-actions">
+          <a href="#work" class="btn primary">See my work</a>
+          <a href="#contact" class="btn ghost">Get in touch</a>
+        </div>
+
+        <div class="terminal">
+          <div class="terminal-bar">
+            <span></span><span></span><span></span>
+            <small>~/raghav-garg</small>
+          </div>
+          <div class="terminal-body">
+            <div><span class="cmd">$</span> whoami</div>
+            <div class="out"><b>raghav_garg</b> — full stack web developer</div>
+            <div style="margin-top:10px;"><span class="cmd">$</span> stack</div>
+            <div class="out">mongodb · express · react · node</div>
+            <div style="margin-top:10px;"><span class="cmd">$</span> hosting --providers</div>
+            <div class="out">hostinger · namecheap · godaddy</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="portrait-frame">
+        <div class="portrait-ring"></div>
+        <div class="photo">
+          <!-- To use your own photo: replace the line below with
+               <img src="raghav.jpg" alt="Raghav Garg">
+               and place raghav.jpg in the same folder as this file. -->
+          <span class="initials">RG</span>
+        </div>
+        <div class="portrait-caption">Raghav Garg</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2>About</h2>
+      </div>
+
+      <div class="about-grid">
+        <div>
+          <p>I'm Raghav Garg, a web developer working across the MERN stack — MongoDB, Express, React and Node. I build sites from scratch and get them looking right on every screen.</p>
+          <p>I don't stop at handing over code. I register and configure domains, set up hosting, and get sites live and running — so clients get a working website, not just a folder of files. I've done this across hosting providers including Hostinger, Namecheap and GoDaddy, and deployed apps on Vercel and Netlify.</p>
+        </div>
+
+        <div>
+          <div class="handle-list">
+            <div class="handle-row">
+              <h3>Build</h3>
+              <p>Full stack websites and web apps using React, Node.js, Express and MongoDB.</p>
+            </div>
+            <div class="handle-row">
+              <h3>Domains</h3>
+              <p>Registering and configuring domains through Namecheap and GoDaddy.</p>
+            </div>
+            <div class="handle-row">
+              <h3>Hosting</h3>
+              <p>Setting up, migrating and managing website hosting, primarily on Hostinger.</p>
+            </div>
+            <div class="handle-row">
+              <h3>Deploy</h3>
+              <p>Shipping and hosting front-end and full stack apps on Vercel and Netlify.</p>
+            </div>
+          </div>
+
+          <div class="platform-pills">
+            <span class="pill">Hostinger</span>
+            <span class="pill">Namecheap</span>
+            <span class="pill">GoDaddy</span>
+            <span class="pill">Vercel</span>
+            <span class="pill">Netlify</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2>How I build — the stack</h2>
+      </div>
+
+      <div class="stack">
+        <div class="stack-layer">
+          <div class="layer-label">
+            <span class="tag">01 · client</span>
+            <h3>Frontend</h3>
+          </div>
+          <div class="layer-techs">
+            <span class="tech">React</span>
+            <span class="tech">JavaScript</span>
+            <span class="tech">HTML5</span>
+            <span class="tech">CSS3</span>
+          </div>
+        </div>
+
+        <div class="stack-layer">
+          <div class="layer-label">
+            <span class="tag">02 · server</span>
+            <h3>Backend</h3>
+          </div>
+          <div class="layer-techs">
+            <span class="tech">Node.js</span>
+            <span class="tech">Express.js</span>
+            <span class="tech">REST APIs</span>
+          </div>
+        </div>
+
+        <div class="stack-layer">
+          <div class="layer-label">
+            <span class="tag">03 · data</span>
+            <h3>Database</h3>
+          </div>
+          <div class="layer-techs">
+            <span class="tech">MongoDB</span>
+          </div>
+        </div>
+
+        <div class="stack-layer">
+          <div class="layer-label">
+            <span class="tag">04 · live</span>
+            <h3>Infrastructure</h3>
+          </div>
+          <div class="layer-techs">
+            <span class="tech">Hostinger</span>
+            <span class="tech">Namecheap</span>
+            <span class="tech">GoDaddy</span>
+            <span class="tech">Vercel</span>
+            <span class="tech">Netlify</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2>Work</h2>
+      </div>
+
+      <div class="proj-grid">
+
+        <a class="proj-card" href="https://throughmyturban.com/" target="_blank" rel="noopener">
+          <div class="proj-bar"><span class="led"></span><span class="url">throughmyturban.com</span></div>
+          <div class="proj-body">
+            <h3>Through My Turban</h3>
+            <p>Content platform covering Sikh history and civic affairs, built and hosted end to end.</p>
+            <span class="proj-tag">Build · Hosting</span>
+          </div>
+        </a>
+
+        <a class="proj-card" href="https://sksjt.org/" target="_blank" rel="noopener">
+          <div class="proj-bar"><span class="led"></span><span class="url">sksjt.org</span></div>
+          <div class="proj-body">
+            <h3>SKSJT</h3>
+            <p>Website for the Sardar Kartar Singh Jhabbar Trust.</p>
+            <span class="proj-tag">Build · Hosting</span>
+          </div>
+        </a>
+
+        <a class="proj-card" href="https://janhitsamiti.org/" target="_blank" rel="noopener">
+          <div class="proj-bar"><span class="led"></span><span class="url">janhitsamiti.org</span></div>
+          <div class="proj-body">
+            <h3>Janhit Samiti</h3>
+            <p>Site for a Patiala-based charitable NGO running medical aid, education and welfare programs since 1987.</p>
+            <span class="proj-tag">Build · Hosting</span>
+          </div>
+        </a>
+
+        <a class="proj-card" href="https://cs-catalyst-thapar.vercel.app/" target="_blank" rel="noopener">
+          <div class="proj-bar"><span class="led"></span><span class="url">cs-catalyst-thapar.vercel.app</span></div>
+          <div class="proj-body">
+            <h3>CS-Catalyst, Thapar</h3>
+            <p>Event platform for the CSE Department society at Thapar Institute of Engineering &amp; Technology.</p>
+            <span class="proj-tag">React · Vercel</span>
+          </div>
+        </a>
+
+        <a class="proj-card" href="https://smarternex.netlify.app/" target="_blank" rel="noopener">
+          <div class="proj-bar"><span class="led"></span><span class="url">smarternex.netlify.app</span></div>
+          <div class="proj-body">
+            <h3>SmarterNex</h3>
+            <p>Web platform deployed and hosted on Netlify.</p>
+            <span class="proj-tag">Build · Netlify</span>
+          </div>
+        </a>
+
+        <a class="proj-card" href="https://wingsofchange.netlify.app/" target="_blank" rel="noopener">
+          <div class="proj-bar"><span class="led"></span><span class="url">wingsofchange</span></div>
+          <div class="proj-body">
+            <h3>Wings of Change</h3>
+            <p>Web project built and deployed on Netlify.</p>
+            <span class="proj-tag">Build · Netlify</span>
+          </div>
+        </a>
+
+        <a class="proj-card" href="https://devlys.netlify.app/" target="_blank" rel="noopener">
+          <div class="proj-bar"><span class="led"></span><span class="url">devlys</span></div>
+          <div class="proj-body">
+            <h3>Devlys</h3>
+            <p>Web project built and deployed on Netlify.</p>
+            <span class="proj-tag">Build · Netlify</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap contact">
+      <div>
+        <span class="section-num">04</span>
+        <h2 style="margin-top:14px;">Have a website that needs building — or a new home to live on?</h2>
+      </div>
+
+      <div class="contact-links">
+        <a href="mailto:raghavgarg8219@gmail.com">
+          <span class="k">email</span>
+          <span class="v">raghavgarg8219@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/raghav-garg-8133b4323/" target="_blank" rel="noopener">
+          <span class="k">linkedin</span>
+          <span class="v">/in/raghav-garg</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>© <span id="year"></span> Raghav Garg</span>
+  <span>Patiala, Punjab, India</span>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+  navToggle.addEventListener('click', () => {
+    const open = navList.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  navList.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navList.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+</body>
+</html>
